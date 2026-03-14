@@ -33,24 +33,95 @@ t_list	*ft_lstlast(t_list *lst)
 	return (lst);
 }
 
-t_list *ft_find_min(t_list *lst)
+int	ft_find_min_index(t_list *lst)
 {
-	int	min;
-	struct t_list actual;
+	int	i, min_i;
+	t_list *actual;
 	
-	acual = lst;
-	min = actual->num;
+	if (lst == NULL)
+	{
+		return (NULL);
+	}
+	i = 0;
+	min_i = 0;
+	actual = lst;
 	while(lst != NULL)
 	{
-		if (lst->num < min)
+		if (lst->num < actual->num)
 		{
 			actual = lst;
-			min = actual->num;
+			min_i = i;
 		}
 		lst = lst->next;
+		i++;
 	}
 	
-	return actual;
+	return min_i;
 }
 
+void	ft_move_min_to_top(t_list **lst)
+{
+	int	minIndex, size;
+	
+	size = ft_lstsize(*lst)
+	minIndex = ft_find_min_index(*lst);
+	
+	if(minIndex <= size/2)
+	{
+		while(minIndex-- > 0)
+		{
+			ra(lst);
+		}
+	}
+	else
+	{
+		while(minIndex++ < size)
+		{
+			rra(lst);
+		}
+	}
+}
 
+void	ft_ra(t_list *lst)
+{
+	t_list *first;
+	t_list *last;
+	
+	if(!lst || !*lst || !(*lst)->next)
+	{
+		return;
+	}
+	
+	first = *lst;
+	*lst = (*lst)->next;
+	first->next = NULL;
+	last = *lst;
+	while (last->next != NULL)
+	{
+		last = last->next;
+	}
+	last->next = firts;
+	write(1,"ra\n",3);
+}
+
+void	ft_rra(t_list *lst)
+{
+	t_list *first;
+	t_list *last;
+	
+	if(!lst || !*lst || !(*lst)->next)
+	{
+		return;
+	}
+	
+	first = *lst;
+	*lst = (*lst)->next;
+	first->next = NULL;
+	last = *lst;
+	while (last->next != NULL)
+	{
+		last = last->next;
+	}
+	last->next = firts;
+	write(1,"ra\n",3);
+}
