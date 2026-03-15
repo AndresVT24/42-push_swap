@@ -25,7 +25,10 @@ SRCS = ft_push_swap.c \
 		ft_bench.c \
 		ft_parse_utils.c \
 		ft_parse_utils2.c \
-		ft_parse_split.c
+		ft_parse_split.c \
+		ft_utils.c \
+		ft_operation.c \
+		ft_algorithm.c \
 
 OBJS = $(SRCS:.c=.o)
 

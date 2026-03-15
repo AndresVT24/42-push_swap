@@ -42,7 +42,8 @@ int	check_flags(char *flag, t_flags *flags)
 				return (3);
 			return (0);
 		}
-		return (2);
+		if (flag[i+1] && (flag[i+1] <'0' || flag[i+1] > '9'))
+			return (2);
 	}
 	return (1);
 }
@@ -65,14 +66,6 @@ int ft_check_duplicates(t_stack *a)
         current = current->next;
     }
     return (0);
-}
-
-void	ft_simple(t_stack *a, t_stack *b, t_inst_count *ic)
-{
-	write(1, "Executing simple sorting algorithm...\n", 34);
-	a = a; // To avoid unused parameter warning
-	b = b; // To avoid unused parameter warning
-	ic = ic; // To avoid unused parameter warning
 }
 
 void	ft_medium(t_stack *a, t_stack *b, t_inst_count *ic)
@@ -98,6 +91,8 @@ int	ft_valid_input(char *input)
 	i = 0;
 	if (input[i] == '-' || input[i] == '+')
 		i++;
+	if (input[i] == '\0')
+		return (0);
 	while (input[i])
 	{
 		if (input[i] < '0' || input[i] > '9')
@@ -112,6 +107,7 @@ void	ft_putstack(t_stack *stack)
 	while (stack)
 	{
 		ft_putstr_ps(ft_itoa(stack->num), 1);
+		ft_putstr_ps("\n", 1);
 		stack = stack->next;
 	}
 	ft_putstr_ps("\n", 1);
@@ -155,8 +151,6 @@ int	main(int argc, char **argv)
 					return (error());
 				t_stack *new_node = ft_stacknew((int)num);
 				if (!new_node)
-					return (error());;
-				if (new_node->num == 0 && split[j][0] != '0')
 					return (error());
 				if (!a)
 					a = new_node;
@@ -172,23 +166,24 @@ int	main(int argc, char **argv)
 	}
 	if (ft_check_duplicates(a))
 		return (error());
+	flags.disorder = ft_compute_disorder(a);
 	if (flags.adaptive)
 	{
 		if (flags.disorder < 200)
-			ft_simple(a, b, &ic);
+			ft_simple(&a, &b, &ic);
 		else if (flags.disorder < 500)
 			ft_medium(a, b, &ic);
 		else
 			ft_complex(a, b, &ic);
 	}
 	else if (flags.simple)
-		ft_simple(a, b, &ic);
+		ft_simple(&a, &b, &ic);
 	else if (flags.medium)
 		ft_medium(a, b, &ic);
 	else if (flags.complex)
 		ft_complex(a, b, &ic);
 	if (flags.bench)
-		ft_bench(flags, ic, a, 2);
+		ft_bench(flags, ic, 2);
 	ft_putstack(a);
 	return (0);
 }

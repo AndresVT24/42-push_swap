@@ -11,32 +11,30 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
-void	simple(t_stack **lst, t_stack **lstTmp , t_inst_count *bench)
+void	ft_simple(t_stack **lst, t_stack **lstTmp , t_inst_count *bench)
 {
-	int	flag;
-	
 	if(!lst || !*lst)
 		return;
 	while(*lst != NULL)
 	{
 		ft_move_min_to_top(lst, bench);
-		ft_push(lstTmp, lst);
-		write(1,"pb\n",3);
-		bench->pb++;
+		ft_push(lstTmp, lst, bench, 'b');
 	}
 	
 	while(*lstTmp != NULL)
 	{
-		ft_push(lst, lstTmp);
-		write(1, "pa\n", 3);
-		bench->pa++;
+		ft_push(lst, lstTmp, bench, 'a');
 	}
 }
 
-int *bucket_sort(int *listNum, int lenList)
-{
-	int	i;
-	
-	return 1;
-	
+void intermedio(int *listNum, int lenList)
+{	
+	listNum = listNum; // To avoid unused parameter warning
+	lenList = lenList; // To avoid unused parameter warning
+	int	*i;
+	i = malloc(sizeof(int) * lenList);
+	if (!i)
+		return (NULL);
+
+	return (i);	
 }

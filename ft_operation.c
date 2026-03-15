@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void	ft_ra(t_stack **lst, t_inst_count *bench)
+void	ft_rotate(t_stack **lst, t_inst_count *bench, char opt)
 {
 	t_stack *first;
 	t_stack *last;
@@ -15,11 +15,19 @@ void	ft_ra(t_stack **lst, t_inst_count *bench)
 	while (last->next != NULL)
 		last = last->next;
 	last->next = first;
-	write(1,"ra\n",3);
-	bench->ra++;
+	if (opt == 'a')
+	{
+		write(1,"ra\n",3);
+		bench->ra++;
+	}
+	if (opt == 'b')
+	{
+		write(1,"rb\n",3);
+		bench->rb++;
+	}
 }
 
-void	ft_rra(t_stack **lst, t_inst_count *bench)
+void	ft_rotate_reverse(t_stack **lst, t_inst_count *bench, char opt)
 {
 	t_stack *prev;
 	t_stack *last;
@@ -36,11 +44,19 @@ void	ft_rra(t_stack **lst, t_inst_count *bench)
 	prev->next = NULL;
 	last->next = *lst;
 	*lst = last;
-	write(1,"rra\n",4);
-	bench->rra++;
+	if (opt == 'a')
+	{
+		write(1,"rra\n",4);
+		bench->rra++;
+	}
+	if (opt == 'b')
+	{
+		write(1,"rrb\n",4);
+		bench->rrb++;
+	}
 }
 
-void	ft_push(t_stack **dest, t_stack **src)
+void	ft_push(t_stack **dest, t_stack **src, t_inst_count *bench, char opt)
 {
 	t_stack *tmp;
 	
@@ -52,4 +68,14 @@ void	ft_push(t_stack **dest, t_stack **src)
 	*src = (*src)->next;
 	tmp->next = *dest;
 	*dest = tmp;
+	if (opt == 'a')
+	{
+		write(1, "pa\n", 3);
+		bench->pa++;
+	}
+	else
+	{
+		write(1, "pb\n",3);
+		bench->pb++;
+	}
 }

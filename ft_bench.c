@@ -68,47 +68,51 @@ void	ft_printstrat(t_flags *flags, int fd)
 
 int ft_compute_disorder(t_stack *a)
 {
-	float	res;
-	int	mistakes;
-	int	total_pairs;
-	t_stack	*current;
-	t_stack	*compare;
+    int     mistakes;
+    int     total_pairs;
+    float   res;
+    t_stack *current;
+    t_stack *compare;
 
-	mistakes = 0;
-	total_pairs = 0;
-	current = a;
-	while (current)
-	{
-		compare = current->next;
-		while (compare)
-		{
-			total_pairs++;
-			if (current->num > compare->num)
-				mistakes++;
-			compare = compare->next;
-		}
-		current = current->next;
-	}
-	if (total_pairs == 0)
-		return (0.0);
-	res = (float)mistakes / total_pairs;
-	res *= 10000;
-	return ((int)res);
+    mistakes = 0;
+    total_pairs = 0;
+    current = a;
+    while (current != NULL)
+    {
+        compare = current->next;
+        while (compare != NULL)
+        {
+            total_pairs++;
+            if (current->num > compare->num)
+                mistakes++;
+            compare = compare->next;
+        }
+        current = current->next;
+    }
+    if (total_pairs == 0)
+        return (0);
+    res = (float)mistakes / (float)total_pairs;
+    res = res * 10000.0f;
+    return ((int)res);
 }
 
-void	ft_bench(t_flags flags, t_inst_count ic, t_stack *node, int fd)
+void	ft_bench(t_flags flags, t_inst_count ic, int fd)
 {
 	int disorder1;
 	int disorder2;
-
-	flags.disorder = ft_compute_disorder(node);
+	char *str_tmp;
 	disorder1 = flags.disorder / 100;
 	disorder2 = flags.disorder % 100;
 	ft_putstr_ps("[bench] disorder: ", fd);
-	ft_putstr_ps(ft_itoa(disorder1), fd);
+	str_tmp = ft_itoa(disorder1);
+    ft_putstr_ps(str_tmp, fd);
+    free(str_tmp);
 	ft_putstr_ps(".", fd);
-	ft_putstr_ps(ft_itoa(disorder2), fd);
-	ft_putstr_ps("%\n", fd);
+	if (disorder2 < 10)
+        ft_putstr_ps("0", fd);
+	str_tmp = ft_itoa(disorder2);
+    ft_putstr_ps(str_tmp, fd);
+    free(str_tmp);	ft_putstr_ps("%\n", fd);
 	ft_printstrat(&flags, fd);
 	ft_putstr_ps("[bench] total operations: ", fd);
 	ft_putstr_ps(ft_itoa(ic.total), fd);

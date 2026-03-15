@@ -21,8 +21,8 @@
 typedef struct s_stack
 {
 	int			num;
-	struct t_stack	*next;
-	
+	int			index;
+	struct s_stack	*next;
 } t_stack;
 
 typedef struct s_flags
@@ -54,7 +54,7 @@ typedef struct s_inst_count
 int	ft_lstsize(t_stack *lst);
 t_stack	*ft_lstlast(t_stack *lst);
 
-void	ft_bench(t_flags flags, t_inst_count ic, t_stack *node, int fd);
+void	ft_bench(t_flags flags, t_inst_count ic, int fd);
 char	*ft_itoa(int n);
 long	itol(char *str);
 int		ft_strlen(const char *s);
@@ -68,10 +68,18 @@ t_stack	*ft_stacknew(int num);
 
 void	ft_ra(t_stack **lst, t_inst_count *bench);
 void	ft_rra(t_stack **lst, t_inst_count *bench);
-void	ft_push(t_stack **dest, t_stack **src);
 
 int	ft_find_min_index(t_stack *lst);
 void	ft_move_min_to_top(t_stack **lst, t_inst_count *bench);
+t_stack	*ft_lstlast(t_stack *lst);
+void	ft_lstadd_front(t_stack **lst, t_stack *new);
+int	ft_lstsize(t_stack *lst);
+int	ft_find_min_index(t_stack *lst);
 
-void	simple(t_stack **lst, t_stack **lstTmp , t_inst_count *bench);
+char	**ft_split(char const *s, char c);
+
+void	ft_rotate(t_stack **lst, t_inst_count *bench, char opt);
+void	ft_rotate_reverse(t_stack **lst, t_inst_count *bench, char opt);
+void	ft_push(t_stack **dest, t_stack **src, t_inst_count *bench, char opt);
+void	ft_simple(t_stack **lst, t_stack **lstTmp , t_inst_count *bench);
 #endif

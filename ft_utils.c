@@ -11,54 +11,22 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
-int	ft_lstsize(t_stack *lst)
-{
-	int	count;
-
-	count = 0;
-	while (lst)
-	{
-		count++;
-		lst = lst->next;
-	}
-	return (count);
-}
-
-t_stack	*ft_lstlast(t_stack *lst)
-{
-	if (!lst)
-		return (NULL);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
-}
-
-void	ft_lstadd_front(t_stack **lst, t_stack *new)
-{
-	if (!lst || !new)
-		return ;
-	new->next = *lst;
-	*lst = new;
-}
-
 int	ft_find_min_index(t_stack *lst)
 {
-	int	i, min_i;
-	t_stack *actual;
-	t_stack *min_node;
+	int	i, min_i, min_value;
 	
 	if (!lst)
 		return (-1);
 	i = 0;
 	min_i = 0;
-	actual = lst;
-	min_node = lst;
+	min_value = lst->num;
 	
-	while(actual != NULL)
+	while(lst)
 	{
-		if (actual->num < min_node->num)
+		if (lst->num < min_value)
 		{
 			
+			min_value = lst->num;
 			min_i = i;
 		}
 		lst = lst->next;
@@ -79,15 +47,62 @@ void	ft_move_min_to_top(t_stack **lst, t_inst_count *bench)
 	if(minIndex <= size/2)
 	{
 		while(minIndex-- > 0)
-		{
-			ft_ra(lst, bench);
-		}
+			ft_rotate(lst, bench, 'a');
 	}
 	else
 	{
 		while(minIndex++ < size)
+			ft_rotate_reverse(lst, bench, 'a');
+	}
+}
+
+int	*ft_sort_array(int *lst, int len)
+{
+	int	i;
+	int	j;
+	int	tmp;
+	
+	i = 0;
+	
+	while (i < len)
+	{
+		j = 0;
+		while (j < len)
 		{
-			ft_rra(lst, bench);
+			if (lst[i] < lst[j])
+			{
+				tmp = lst[i];
+				lst[i] = lst[j];
+				lst[j] = tmp;
+			}
+			j++;	
 		}
+		i++;
+	}
+	return (lst);
+}
+
+void	ft_addIndex2stack(t_stack *nodos, int *list, int len)
+{
+	int	i;
+	int	j;
+	
+	if (!nodos || !list)
+		return;
+		
+	i = 0;
+	while (i < len && nodos != NULL)
+	{
+		j = 0;
+		while (j < len)
+		{
+			if (list[j] == nodos->num)
+			{
+				nodos->index = j;
+			}
+			j++;
+		}
+		nodos = nodos->next;
+		i++;
 	}
 }
