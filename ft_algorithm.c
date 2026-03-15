@@ -11,28 +11,26 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
-int *exchange_sort(t_list *head)
+void	simple(t_stack **lst, t_stack **lstTmp , t_inst_count *bench)
 {
-	t_list *lastNode;
-	t_list *stackB;
+	int	flag;
 	
-	lastNode = ft_lstlast(head);
-	while (i < lenList)
+	if(!lst || !*lst)
+		return;
+	while(*lst != NULL)
 	{
-		while(j < lenList)
-		{
-			if (listNum[i] < listNum[j])
-			{
-				tmp = listNum[i];
-				listNum[i] = listNum[j];
-				listNum[j] = tmp;
-			}
-			j++;
-		}
-		j = 0;
-		i++;
+		ft_move_min_to_top(lst, bench);
+		ft_push(lstTmp, lst);
+		write(1,"pb\n",3);
+		bench->pb++;
 	}
-	return listNum;
+	
+	while(*lstTmp != NULL)
+	{
+		ft_push(lst, lstTmp);
+		write(1, "pa\n", 3);
+		bench->pa++;
+	}
 }
 
 int *bucket_sort(int *listNum, int lenList)

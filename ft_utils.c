@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
-int	ft_lstsize(t_list *lst)
+int	ft_lstsize(t_stack *lst)
 {
 	int	count;
 
@@ -24,7 +24,7 @@ int	ft_lstsize(t_list *lst)
 	return (count);
 }
 
-t_list	*ft_lstlast(t_list *lst)
+t_stack	*ft_lstlast(t_stack *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -33,23 +33,32 @@ t_list	*ft_lstlast(t_list *lst)
 	return (lst);
 }
 
-int	ft_find_min_index(t_list *lst)
+void	ft_lstadd_front(t_stack **lst, t_stack *new)
+{
+	if (!lst || !new)
+		return ;
+	new->next = *lst;
+	*lst = new;
+}
+
+int	ft_find_min_index(t_stack *lst)
 {
 	int	i, min_i;
-	t_list *actual;
+	t_stack *actual;
+	t_stack *min_node;
 	
-	if (lst == NULL)
-	{
-		return (NULL);
-	}
+	if (!lst)
+		return (-1);
 	i = 0;
 	min_i = 0;
 	actual = lst;
-	while(lst != NULL)
+	min_node = lst;
+	
+	while(actual != NULL)
 	{
-		if (lst->num < actual->num)
+		if (actual->num < min_node->num)
 		{
-			actual = lst;
+			
 			min_i = i;
 		}
 		lst = lst->next;
@@ -59,69 +68,26 @@ int	ft_find_min_index(t_list *lst)
 	return min_i;
 }
 
-void	ft_move_min_to_top(t_list **lst)
+void	ft_move_min_to_top(t_stack **lst, t_inst_count *bench)
 {
-	int	minIndex, size;
+	int	minIndex;
+	int	size;
 	
-	size = ft_lstsize(*lst)
+	size = ft_lstsize(*lst);
 	minIndex = ft_find_min_index(*lst);
 	
 	if(minIndex <= size/2)
 	{
 		while(minIndex-- > 0)
 		{
-			ra(lst);
+			ft_ra(lst, bench);
 		}
 	}
 	else
 	{
 		while(minIndex++ < size)
 		{
-			rra(lst);
+			ft_rra(lst, bench);
 		}
 	}
-}
-
-void	ft_ra(t_list *lst)
-{
-	t_list *first;
-	t_list *last;
-	
-	if(!lst || !*lst || !(*lst)->next)
-	{
-		return;
-	}
-	
-	first = *lst;
-	*lst = (*lst)->next;
-	first->next = NULL;
-	last = *lst;
-	while (last->next != NULL)
-	{
-		last = last->next;
-	}
-	last->next = firts;
-	write(1,"ra\n",3);
-}
-
-void	ft_rra(t_list *lst)
-{
-	t_list *first;
-	t_list *last;
-	
-	if(!lst || !*lst || !(*lst)->next)
-	{
-		return;
-	}
-	
-	first = *lst;
-	*lst = (*lst)->next;
-	first->next = NULL;
-	last = *lst;
-	while (last->next != NULL)
-	{
-		last = last->next;
-	}
-	last->next = firts;
-	write(1,"ra\n",3);
 }

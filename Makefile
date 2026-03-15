@@ -17,14 +17,15 @@ AR = ar
 CFLAGS = -Wall -Wextra -Werror
 ARFLAGS = rcs
 NAME = push_swap
-LIBFT_DIR = libft
-PRINTF = $(LIBFT_DIR)/libftprintf.a
-INCLUDES = -I$(LIBFT_DIR)
+PRINTF_DIR = printf
 
 # ===== FILE LISTS ====
 
 SRCS = ft_push_swap.c \
-
+		ft_bench.c \
+		ft_parse_utils.c \
+		ft_parse_utils2.c \
+		ft_parse_split.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -33,7 +34,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS)  $(INCLUDES) $(OBJS) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 # $(AR) $(ARFLAGS) $(NAME) $(OBJS)
 
 # Rule for building any .o file from its .c file
